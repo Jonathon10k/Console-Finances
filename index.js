@@ -86,3 +86,24 @@ var finances = [
   ['Jan-2017', 138230],
   ['Feb-2017', 671099],
 ];
+
+// Declare variables
+var headerText = "Financial Analysis \n----------------";
+var totalMonths= finances.length;
+var totalProfitsLosses;
+var averageChanges;
+var greatestIncrease;
+var greatestDecrease;
+
+// Print the header text
+console.log(headerText);
+// Print total months
+console.log("Total Months: " + totalMonths);
+// Print net total profit/losses over period
+console.log("Total: ");
+// Print average of the changes in profit/losses over period
+console.log("Average Changes: ");
+// Print greatest increase in profit/losses over period
+console.log("Greatest Increase in Profit/Losses: ")
+// Print greatest decrease in profit/losses over period
+console.log("Greatest Decrease in Profit/Losses: ")
