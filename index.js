@@ -87,43 +87,81 @@ var finances = [
   ["Feb-2017", 671099],
 ];
 
-// Declare variables
 var totalMonths = 0;
 var totalProfitsLosses = 0;
+var averageChangeTotal = 0;
 var averageChange = 0;
 var greatestIncrease;
 var greatestDecrease;
+var greatestInchMonth;
+var greatestIncNum = 0;
+var smallestIncMonth;
+var smallestIncNum = greatestIncNum;
+var increaseProfitLosses = [];
 
-// 1. Get total months
+// *** 1. Find total months in finances array ***
 totalMonths = finances.length;
 
-// 2. Total profits/losses over period
+// *** 2. Find total profits/losses over all periods ***
 for (var i = 0; i < finances.length; i++) {
   totalProfitsLosses += finances[i][1];
 }
 
-// 3. Average of changes - add (element[i][1] minus element[i+1][1]) difference to averageChange
-for (var i = 0; i < finances.length-1; i++) {
-    averageChange += finances[i][1] - finances[i + 1][1];
+// *** 3. Find average of changes ***
+
+// Add value of (element[i][1] minus element[i+1][1]) to averageChange
+for (var i = 0; i < finances.length - 1; i++) {
+  averageChange += finances[i + 1][1] - finances[i][1];
 }
 
-var averageChangeTotal = averageChange/(finances.length-1);
+// Divide by total periods
+averageChangeTotal = averageChange / (finances.length - 1);
 
+// *** 4. Greatest increase profit/losses ***
 
-// 4. Greatest increase profit/losses
-var increaseProfitLosses = [];
-
-for (var i = 0; i < finances.length-1; i++) {
-  increaseProfitLosses.push([finances[i], finances[i+1], (finances[i][1] - finances[i+1][1])]);
+// Create new array containing two-month pairs and period value inc/dec
+for (var i = 0; i < finances.length - 1; i++) {
+  increaseProfitLosses.push([
+    finances[i][0],
+    finances[i + 1][0],
+    finances[i + 1][1] - finances[i][1],
+  ]);
 }
 
-console.log(increaseProfitLosses);
-// 5. Greatest decrease profit/losses
+// Loop through increaseProfitLosses array and store largest value + period
+for (var i = 0; i < increaseProfitLosses.length - 1; i++) {
+  if (increaseProfitLosses[i][2] > greatestIncNum) {
+    greatestIncMonth = increaseProfitLosses[i][1];
+    greatestIncNum = increaseProfitLosses[i][2];
+  }
+}
 
-// Print the header text
+// *** 5. Greatest decrease profit/losses ***
+
+// 5.1 Loop through increaseProfitLosses array and assign smallest value (smallest change) +  month to variables
+for (var i = 0; i < increaseProfitLosses.length; i++) {
+  if (increaseProfitLosses[i][2] < smallestIncNum) {
+    smallestIncNum = increaseProfitLosses[i][2];
+    smallestIncMonth = increaseProfitLosses[i][1];
+  }
+}
+
+// *** Output results to console ***
 console.log("Financial Analysis \n----------------");
 console.log("Total Months: " + totalMonths);
 console.log("Total: $" + totalProfitsLosses);
 console.log("Average Change: " + averageChangeTotal.toFixed(2));
-console.log("Greatest Increase in Profit/Losses: ");
-console.log("Greatest Decrease in Profit/Losses: ");
+console.log(
+  "Greatest Increase in Profits/Losses: " +
+  greatestIncMonth +
+  " ($" +
+  greatestIncNum +
+  ")"
+);
+console.log(
+  "Greatest Decrease in Profits/Losses: " +
+  smallestIncMonth +
+  " ($" +
+  smallestIncNum +
+  ")"
+);
